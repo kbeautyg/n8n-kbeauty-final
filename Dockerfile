@@ -1,7 +1,6 @@
 FROM node:20-alpine
 
 ARG N8N_VERSION=1.94.0
-
 RUN apk add --update graphicsmagick tzdata
 
 USER root
