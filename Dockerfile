@@ -1,18 +1,15 @@
-FROM node:20-alpine
+# ==== Dockerfile =====
+FROM n8nio/n8n:1.93.0          # уже содержит Node 18 + Debian
 
-ARG N8N_VERSION=1.94.0
-RUN apk add --update graphicsmagick tzdata
+# если нужны пакеты — ставь через apt, а не apk
+RUN apt-get update && \
+    apt-get install -y graphicsmagick tzdata && \
+    rm -rf /var/lib/apt/lists/*
 
-USER root
-
-RUN apk --update add --virtual build-dependencies python3 build-base && \
-    npm_config_user=root npm install --location=global n8n@${N8N_VERSION} && \
-    apk del build-dependencies
-
-WORKDIR /data
-
-EXPOSE $PORT
-
+# доп. npm-плагины для n8n
+USER root               # (в образе уже root, но повторю)
+# окружение / порт оставляем как было
 ENV N8N_USER_ID=root
+EXPOSE ${PORT}
 
-CMD export N8N_PORT=$PORT && n8n start
+CMD ["n8n", "start"]
