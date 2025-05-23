@@ -1,5 +1,5 @@
 # ==== Dockerfile =====
-FROM n8nio/n8n:1.93.0          # уже содержит Node 18 + Debian
+FROM n8nio/n8n:1.93.0
 
 # если нужны пакеты — ставь через apt, а не apk
 RUN apt-get update && \
@@ -7,7 +7,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # доп. npm-плагины для n8n
-USER root               # (в образе уже root, но повторю)
+USER root     
 # окружение / порт оставляем как было
 ENV N8N_USER_ID=root
 EXPOSE ${PORT}
